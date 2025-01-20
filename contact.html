@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Cyber Portfolio</title>
+    <style>
+        :root {
+            --neon-green: #0f0;
+            --neon-blue: #0ff;
+            --dark-bg: #000;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #000;
+            color: var(--neon-green);
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 150vh;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--neon-green);
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--neon-green);
+            animation: glitch-line 2s infinite;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .navbar li {
+            margin: 0 20px;
+        }
+
+        .navbar a {
+            color: var(--neon-green);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 10px;
+        }
+
+        .navbar a:hover {
+            animation: glitch 0.3s infinite;
+            text-shadow: 2px 2px 10px var(--neon-green);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .contact-form {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 255, 0, 0.1) 100%);
+            pointer-events: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--neon-green);
+            border-color: var(--neon-blue);
+        }
+
+        button {
+            background-color: transparent;
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            padding: 10px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-family: 'Share Tech Mono', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: var(--neon-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+        @keyframes glitch-line {
+            0% { left: -100% }
+            50% { left: 100% }
+            100% { left: 100% }
+        }
+
+        /* Ajout d'un effet de scan ligne */
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                rgba(0, 255, 0, 0.1),
+                rgba(0, 255, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            background-size: 100% 4px;
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0) }
+            100% { transform: translateY(50%) }
+        }
+
+        /* Ajout d'un effet de terminal */
+        .contact-form h2::before {
+            content: '> ';
+            color: var(--neon-green);
+        }
+
+        .contact-form h2 {
+            border-bottom: 1px solid var(--neon-green);
+            padding-bottom: 10px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+
+        /* Nouveau style pour le canvas d'arrière-plan */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Ajustement de l'opacité du contenu pour mieux voir l'animation */
+        .container, .navbar {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .main-content {
+            padding-bottom: 100px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid var(--neon-blue);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            z-index: 999;
+        }
+
+        .footer-link {
+            color: var(--neon-blue);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid var(--neon-blue);
+            transition: all 0.3s ease;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .footer-link i {
+            font-size: 1.2em;
+        }
+
+        .contact-container {
+            position: relative;
+            margin: 100px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            z-index: 1;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .contact-title {
+            color: var(--neon-blue);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: var(--neon-blue);
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-blue);
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 12px 25px;
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-family: 'Share Tech Mono', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="matrix-bg"></canvas>
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">[Accueil]</a></li>
+            <li><a href="experience.html">[Expérience]</a></li>
+            <li><a href="contact.html">[Contact]</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="contact-container">
+            <h2 class="contact-title">[Contactez-moi]</h2>
+            <form class="contact-form" action="https://formspree.io/f/xpwwvqjv" method="POST">
+                <div class="form-group">
+                    <label for="name">[Nom]</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">[Email]</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">[Sujet]</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">[Message]</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">[ENVOYER]</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a href="mailto:mehdicode1@gmail.com" class="footer-link">
+            <i class="fas fa-envelope"></i>
+            [EMAIL]
+        </a>
+        <a href="tel:0630658028" class="footer-link">
+            <i class="fas fa-phone"></i>
+            [TÉLÉPHONE]
+        </a>
+        <a href="https://www.linkedin.com/in/mehdi-berrada-a159b0325/" target="_blank" class="footer-link">
+            <i class="fab fa-linkedin"></i>
+            [LINKEDIN]
+        </a>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Configuration des étoiles
+        class Star {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.blinkSpeed = Math.random() * 0.02 + 0.005;
+                this.opacity = Math.random();
+                this.increasing = Math.random() >= 0.5;
+            }
+
+            update() {
+                if (this.increasing) {
+                    this.opacity += this.blinkSpeed;
+                    if (this.opacity >= 1) {
+                        this.increasing = false;
+                    }
+                } else {
+                    this.opacity -= this.blinkSpeed;
+                    if (this.opacity <= 0.2) {
+                        this.increasing = true;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        // Création des étoiles
+        const stars = Array.from({ length: 200 }, () => new Star());
+
+        // Liste des mots à afficher
+        const words = [
+            'MEHDI BERRADA',
+            'CYBERSÉCURITÉ',
+            'RÉSEAUX',
+            'TÉLÉCOMMUNICATIONS',
+            '3ème ANNÉE',
+            'PENTESTING',
+            'SÉCURITÉ INFORMATIQUE',
+            'ETHICAL HACKING',
+            'NETWORK SECURITY',
+            'ANALYSE DE VULNÉRABILITÉS'
+        ];
+
+        class FloatingWord {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.word = words[Math.floor(Math.random() * words.length)];
+                this.x = Math.random() * (canvas.width - 300);
+                this.y = Math.random() * (canvas.height - 100);
+                this.opacity = 0;
+                this.fadeIn = true;
+                this.size = Math.random() * 20 + 15;
+                this.maxOpacity = Math.random() * 0.5 + 0.3;
+                // Ajout d'une couleur cyan/bleu pour un effet plus spatial
+                this.color = `hsl(${180 + Math.random() * 40}, 100%, 70%)`;
+            }
+
+            update() {
+                if (this.fadeIn) {
+                    this.opacity += 0.01;
+                    if (this.opacity >= this.maxOpacity) {
+                        this.fadeIn = false;
+                        setTimeout(() => {
+                            this.fadeIn = false;
+                        }, 1000);
+                    }
+                } else {
+                    this.opacity -= 0.01;
+                    if (this.opacity <= 0) {
+                        this.reset();
+                        this.fadeIn = true;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.font = `${this.size}px 'Share Tech Mono'`;
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fillText(this.word, this.x, this.y);
+                ctx.globalAlpha = 1;
+
+                // Effet de lueur adapté à la couleur
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            }
+        }
+
+        const floatingWords = Array.from({ length: 5 }, () => new FloatingWord());
+
+        function animate() {
+            // Fond noir complet
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Mise à jour et dessin des étoiles
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+
+            // Mise à jour et dessin des mots
+            floatingWords.forEach(word => {
+                word.update();
+                word.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
